@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+/*
+ * EduAI design system — minimal, clean, Linear-inspired.
+ * Neutral palette, crisp typography, subtle borders, one restrained accent.
+ * Theme is driven by the `data-theme` attribute on <html> (see ThemeContext).
+ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  /* Surfaces */
+  --bg: #fbfbfa;
+  --surface: #ffffff;
+  --surface-2: #f6f6f5;
+  --surface-3: #efeff0;
+  --overlay: rgba(17, 17, 19, 0.45);
+
+  /* Text */
+  --fg: #08090a;
+  --muted: #55585e;
+  --subtle: #8a8f98;
+
+  /* Lines */
+  --border: #e6e6e4;
+  --border-strong: #d4d4d2;
+
+  /* Accent (restrained indigo-violet) */
+  --accent: #5e6ad2;
+  --accent-hover: #515cc0;
+  --accent-fg: #ffffff;
+  --accent-soft: #eceef9;
+
+  /* Status */
+  --success: #3d9a50;
+  --success-soft: #e7f4e9;
+  --warning: #c9820a;
+  --warning-soft: #fbf1dd;
+  --danger: #d3402f;
+  --danger-soft: #fbe9e7;
+  --info: #2f6fd3;
+  --info-soft: #e6eefb;
+
+  --ring: rgba(94, 106, 210, 0.35);
+  --shadow-sm: 0 1px 2px rgba(17, 17, 19, 0.04), 0 1px 3px rgba(17, 17, 19, 0.06);
+  --shadow-md: 0 4px 12px rgba(17, 17, 19, 0.06), 0 2px 4px rgba(17, 17, 19, 0.04);
+  --shadow-lg: 0 12px 32px rgba(17, 17, 19, 0.10), 0 4px 8px rgba(17, 17, 19, 0.05);
+}
+
+[data-theme="dark"] {
+  --bg: #08090a;
+  --surface: #0f1011;
+  --surface-2: #161719;
+  --surface-3: #1e2023;
+  --overlay: rgba(0, 0, 0, 0.6);
+
+  --fg: #f7f8f8;
+  --muted: #9ca0a8;
+  --subtle: #696e77;
+
+  --border: #1f2023;
+  --border-strong: #2b2d31;
+
+  --accent: #7c87e8;
+  --accent-hover: #8e98ec;
+  --accent-fg: #0a0a0f;
+  --accent-soft: #1a1d33;
+
+  --success: #4cc061;
+  --success-soft: #11231560;
+  --warning: #e0a23a;
+  --warning-soft: #2a210d60;
+  --danger: #f06a5b;
+  --danger-soft: #2a121060;
+  --info: #5b9bf0;
+  --info-soft: #11203a60;
+
+  --ring: rgba(124, 135, 232, 0.4);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-overlay: var(--overlay);
+
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+
+  --color-border-default: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--fg);
+}
+
+/* Thin, unobtrusive scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 9999px;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.35s ease both;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--surface-3) 60%, transparent),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
