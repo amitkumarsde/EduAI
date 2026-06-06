@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LuCircleCheck, LuDownload, LuShare2, LuRotateCcw, LuFileText } from "react-icons/lu";
 import { useAppContext } from "@/context/AppContext";
-import { downloadPaperPDF, triggerPDFDownload } from "@/lib/api";
+import { API_URL, downloadPaperPDF, triggerPDFDownload } from "@/lib/api";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -65,7 +65,7 @@ export default function PaperGeneratedPage() {
   const downloadUrl =
     paperData.downloadUrl ||
     paperData.data?.downloadUrl ||
-    (paperId ? `/api/papers/${paperId}/download` : null);
+    (paperId ? `${API_URL}/api/papers/${paperId}/download` : null);
 
   const paper: PaperInfo = paperData.data?.paper_info || paperData.paper_info || {};
   const questions: PaperQuestion[] = paperData.data?.questions || paperData.questions || [];

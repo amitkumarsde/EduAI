@@ -36,10 +36,15 @@ import type {
 const API_BASE = "/api";
 const API_V1 = "/api/v1";
 
+// Origin of the Express backend. Set NEXT_PUBLIC_API_URL to the deployed
+// backend URL (e.g. https://eduai-backend.onrender.com); empty falls back to
+// same-origin for local dev against a backend on the same host.
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
+
 export const TOKEN_KEY = "edtech_token";
 export const USER_KEY = "edtech_user";
 
-const client = axios.create();
+const client = axios.create({ baseURL: API_URL });
 
 client.interceptors.request.use((config) => {
   if (typeof window !== "undefined") {

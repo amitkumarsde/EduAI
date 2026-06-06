@@ -20,7 +20,6 @@ import gradingRoutes from "./routes/gradingRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 
 // Fail fast in production if the JWT secret is left at its insecure default,
 // instead of silently signing guessable tokens.
@@ -33,9 +32,11 @@ if (
 }
 
 app.use(express.json({ limit: "5mb" }));
+// The frontend calls this API directly from the browser (cross-origin), so
+// allow any origin. Auth is via Bearer JWT, not cookies, so this is safe.
 app.use(
   cors({
-    origin: FRONTEND_URL,
+    origin: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
@@ -81,7 +82,7 @@ app.use(
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
-    console.log(`   Allowing CORS from ${FRONTEND_URL}`);
+    console.log(`   CORS: allowing all origins`);
   });
 });
 
